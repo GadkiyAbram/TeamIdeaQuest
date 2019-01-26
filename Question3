@@ -1,0 +1,51 @@
+Вопрос 3:
+
+Задание можно выполнить на любом языке программирования. Вопрос: Дано число N, необходимо посчитать количество нулей на конце числа, являющегося результатом вычисления факториала N!
+
+public class Factorial {
+
+    private long number;                    //Initialize the variable "number", for count factorial
+
+    public Factorial(long number){          //Class constructor
+        this.number = number;
+    }
+
+    public int ZeroInTheEnd(){              //Method for counting zeros in the end of factorial of "number"
+        int zeroCount = 0;                  //Variable for storing the quantity on zeros in the end
+
+        String numberArray = String.valueOf(FactorialRecursion(this.number));       //Converting the factorial result to
+        char[] arrayNumber = numberArray.toCharArray();                             //char array
+
+        for (int j = arrayNumber.length - 1; j >= 0; j--){          //counting zeros from the end of array
+            if (arrayNumber[arrayNumber.length - 1] != '0')         //if array's last element is not '0', break, result will be 0 zeros
+            {
+                break;
+            }else {
+                if (arrayNumber[j] == '0'){                         //if the next element == 0, increase the 'zerocount' on 1
+                    zeroCount++;
+                }else {
+                    break;
+                }
+            }
+        }
+        return zeroCount;           //return the result in the end
+    }
+
+    public long FactorialRecursion(long number){                     //Calculating the factorial of the number using recursion
+        return number < 2 ? 1 : number * FactorialRecursion(number - 1);
+    }
+}
+
+Использование в Main.java:
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(system.in);
+        System.out.println("Enter the number for Factorial:”);
+        long numberInsert = scanner.nextLong();
+        Factorial fact = new Factorial(numberInsert);
+        System.out.println("Factorial: " + fact.FactorialRecursion(numberInsert) + ", Zeros in the end: " + fact.ZeroInTheEnd());
+    }
+}
