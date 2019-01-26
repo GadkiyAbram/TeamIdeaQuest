@@ -1,0 +1,95 @@
+import com.sun.deploy.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class StringCompare {        //Class for x2 strings to compare
+
+    private String str1;            //string 1 stands for Version 1
+    private String str2;            //string 1 stands for Version 1
+
+    List<Integer> num1 = new ArrayList<>();     //Initizlize num1 dynamic array for storing the x4 numbers of each Versions
+    List<Integer> num2 = new ArrayList<>();
+
+    public StringCompare(String str1, String str2){     //Class constructor
+        this.str1 = str1;
+        this.str2 = str2;
+    }
+
+    public String Comparing(){
+        String result = null;       //Initializing the result variable, which will be returned as a result, set null
+        String[] arr1 = StringUtils.splitString(this.str1, ".");    //Present a string1 as a array of strings, spliting & removing '.' sign
+        String[] arr2 = StringUtils.splitString(this.str2, ".");    //Present a string1 as a array of strings, spliting & removing '.' sign
+
+        for (int i = 0; i < 4; i++){
+            num1.add(Integer.valueOf(arr1[i]));     //Adding the arr1/arr2 items to ArrayLists, converting ones to Int value
+            num2.add(Integer.valueOf(arr2[i]));
+        }
+
+        for (int k = 0; k < 4; k++){                //Using for-cycle to pass through the Dynamic Arrays
+            if (num1.equals(num2)){                 //First check - whether strings are equal to each other, in this case the Versions are alike
+                                                    //In order to do so, methods hashCode() & equals() are overridden
+                result = "Versions are equal";      //pass the result
+                break;                              //break the cycle and return result
+            }else{
+                if (num1.get(k) > num2.get(k)){     //if k-item of array1 > k-item of array2
+                    result = "Version " + str1 + " is newer";   //pass the result
+                    break;                                      //break the cycle
+                }else if (num2.get(k) > num1.get(k)){   //if k-item of array2 > k-item of array1
+                    result = "Version " + str2 + " is newer";   //pass the result
+                    break;                              //break the cycle
+                }else {
+                    continue;       //if k-items of array are alike, go through the arrays
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int hashCode(){
+        final int prime = 31;
+        int result = 1;
+        for (int i = 0; i < 4; i++){
+            result = prime * result + num1.get(i);
+            result = prime * result + num2.get(i);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        StringCompare other = (StringCompare) obj;
+        if (num1 != other.num2)
+            return false;
+        if (num1 != other.num2)
+            return false;
+        return true;
+    }
+
+}
+
+Использование в Main.java:
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+       
+        System.out.println("Enter the string1:");
+        String str1 = scanner.nextLine();
+        System.out.println("Enter the string2:");
+        String str2 = scanner.nextLine();
+
+        StringCompare sc = new StringCompare(str1, str2);
+        System.out.println(sc.Comparing());
+    }
+}
